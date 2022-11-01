@@ -1,6 +1,7 @@
 import SwiftUI
 import Combine
 
+@MainActor
 class ImageViewModel: ObservableObject {
   @Published var image = UIImage(named: Constants.Image.logo) ?? UIImage()
 
@@ -15,7 +16,7 @@ class ImageViewModel: ObservableObject {
 
     let (data, _) = try await session.data(from: url)
 
-    Task {@MainActor in
+    Task {
       image = UIImage(data: data) ?? UIImage(named: Constants.Image.logo) ?? UIImage()
     }
   }

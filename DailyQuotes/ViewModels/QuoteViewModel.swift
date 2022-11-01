@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 class QuoteViewModel: ObservableObject {
   @Published var quote = Quote.example
 
@@ -8,7 +9,6 @@ class QuoteViewModel: ObservableObject {
       print("Invalid URL")
       return
     }
-
 
     let configuration = URLSessionConfiguration.default
     let session = URLSession(configuration: configuration)
@@ -22,7 +22,7 @@ class QuoteViewModel: ObservableObject {
       return
     }
 
-    Task { @MainActor in
+    Task {
       do {
         quote = try JSONDecoder().decode(Quote.self, from: data)
       } catch {
